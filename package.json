@@ -1,0 +1,28 @@
+{
+  "name": "table-width-calculator",
+  "version": "0.0.1",
+  "description": "表格宽度计算器",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "preview": "vite preview --port 5000",
+    "preview:8080": "vite preview --port 8080",
+    "predeploy": "npm run build",
+    "deploy": "echo '部署脚本 - 请根据实际部署环境替换此命令'"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.4",
+    "terser": "^5.29.0",
+    "vite": "^4.1.1",
+    "vite-plugin-solid": "^2.5.0"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1",
+    "solid-js": "^1.6.10"
+  }
+}

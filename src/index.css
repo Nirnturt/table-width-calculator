@@ -1,0 +1,302 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased text-content dark:text-content-dark bg-canvas dark:bg-canvas-dark;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply antialiased text-content dark:text-content-dark;
+    overflow-x: hidden;
+  }
+
+  /* Linear样式的现代表格 */
+  table {
+    @apply w-full border-collapse;
+  }
+
+  thead {
+    @apply bg-panel dark:bg-panel-dark;
+  }
+
+  tr {
+    @apply transition-colors duration-150 ease-in-out;
+  }
+
+  tr:hover td {
+    @apply bg-element dark:bg-element-dark;
+  }
+
+  th {
+    @apply text-xs font-medium text-content-subtle dark:text-content-dark-subtle border-b border-divider dark:border-divider-dark py-3 px-3 text-left;
+  }
+
+  td {
+    @apply border-b border-divider dark:border-divider-dark py-3 px-3 text-sm;
+  }
+
+  /* 现代按钮 */
+  button {
+    @apply transition-all duration-200 ease-out-cubic;
+  }
+
+  /* 输入框 */
+  input {
+    @apply transition-all duration-200 ease-out-cubic;
+  }
+
+  /* 固定列样式 - 直接使用CSS属性，避免循环依赖 */
+  .table-sticky {
+    position: sticky;
+    z-index: 10;
+  }
+}
+
+@layer components {
+  /* 卡片组件 */
+  .card {
+    @apply bg-white dark:bg-panel-dark border border-divider dark:border-divider-dark rounded-lg shadow-sm dark:shadow-dark-sm transition-all duration-200;
+  }
+
+  .card-hover {
+    @apply hover:shadow-md dark:hover:shadow-dark-md hover:border-gray-300 dark:hover:border-gray-600;
+  }
+
+  /* 按钮组件 */
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary-hover focus:ring-primary-hover/40;
+  }
+
+  .btn-secondary {
+    @apply bg-element dark:bg-element-dark text-content dark:text-content-dark hover:bg-gray-200 dark:hover:bg-gray-700 focus:ring-gray-400/40 dark:focus:ring-gray-600/40;
+  }
+
+  .btn-danger {
+    @apply bg-danger text-white hover:bg-danger-hover focus:ring-danger-hover/40;
+  }
+
+  .btn-success {
+    @apply bg-success text-white hover:bg-success-hover focus:ring-success-hover/40;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-content dark:text-content-dark hover:bg-element dark:hover:bg-element-dark focus:ring-gray-400/40 dark:focus:ring-gray-600/40;
+  }
+
+  /* 表格组件 */
+  .table-container {
+    @apply overflow-x-auto  dark:border-divider-dark;
+  }
+
+  /* 确保表格填满容器且没有额外间距 */
+  .table-container table {
+    @apply w-full border-collapse;
+  }
+  
+  /* 修复表头中单元格的圆角 */
+  .table-container th {
+    @apply rounded-none;
+  }
+
+  /* 标签页组件 */
+  .tab-container {
+    @apply flex border-b border-divider dark:border-divider-dark;
+  }
+
+  .tab {
+    @apply py-2.5 px-4 text-sm font-medium border-b-2 transition-colors duration-200;
+  }
+
+  .tab-active {
+    @apply text-primary dark:text-primary-dark border-primary dark:border-primary-dark;
+  }
+
+  .tab-inactive {
+    @apply text-content-subtle dark:text-content-dark-subtle border-transparent hover:text-content dark:hover:text-content-dark hover:border-gray-300 dark:hover:border-gray-700;
+  }
+}
+
+/* 隐藏滚动条但保留功能 */
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* 全局滚动条样式 */
+::-webkit-scrollbar {
+  @apply w-1.5 h-1.5;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
+}
+
+/* 主题过渡 */
+html.dark {
+  color-scheme: dark;
+}
+
+/* 深色模式滚动条样式 */
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-gray-600;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+
+/* 深色模式选中文本样式 */
+.dark ::selection {
+  @apply bg-primary-dark/20 text-content-dark;
+}
+
+/* 暗色模式过渡效果 */
+html, body, * {
+  @apply transition-colors duration-200;
+}
+
+/* 表格滚动阴影效果 */
+.overflow-x-auto {
+  position: relative;
+}
+
+.overflow-x-auto::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 20px;
+  background: linear-gradient(to right, rgba(255,255,255,0), rgba(0,0,0,0.05));
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.dark .overflow-x-auto::after {
+  background: linear-gradient(to right, rgba(17,24,39,0), rgba(0,0,0,0.2));
+}
+
+.overflow-x-auto:hover::after {
+  opacity: 1;
+}
+
+/* 特殊百分比高亮 */
+.special-percent {
+  @apply font-medium;
+}
+
+/* 卡片悬停效果 */
+.grid > div {
+  transition: all 0.2s ease;
+}
+
+.grid > div:hover {
+  transform: translateY(-2px);
+}
+
+/* 特殊百分比卡片样式 */
+.special-card {
+  @apply font-bold;
+}
+
+/* 添加基础动画和过渡效果 */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.4s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 1.5s infinite;
+}
+
+/* 全局过渡设置 */
+.transition-all {
+  transition-duration: 250ms;
+}
+
+.transition-fast {
+  transition-duration: 150ms;
+}
+
+.transition-slow {
+  transition-duration: 500ms;
+}
+
+/* 隐藏滚动条和导航控件 */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+/* 隐藏Firefox滚动条 */
+* {
+  scrollbar-width: none;
+}
+
+/* 隐藏IE滚动条 */
+* {
+  -ms-overflow-style: none;
+}
+
+/* 隐藏导航控件 */
+.navigation-controls {
+  display: none !important;
+}
+
+/* 隐藏右侧可能的控件 */
+.right-side-controls,
+.scroll-controls,
+.page-controls {
+  display: none !important;
+}

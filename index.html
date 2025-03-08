@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#101112" media="(prefers-color-scheme: dark)" />
+    <meta name="description" content="表格列宽计算器 - 轻松计算和管理表格列宽" />
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="表格列宽计算器">
+    <title>表格列宽计算器</title>
+    <!-- Inter字体 -->
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script>
+      // 在页面加载前初始化主题，避免闪烁
+      (function() {
+        const theme = localStorage.getItem('theme') || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+    <script type="module" src="/src/index.jsx"></script>
+  </body>
+</html>
