@@ -1,4 +1,5 @@
 import { createSignal, createEffect } from 'solid-js';
+import { t, getCurrentLanguage } from '../i18n';
 import { convertToExportFormat, downloadJson, downloadZip, calculatePercentagesInRange } from '../utils/export';
 
 function ExportModal(props) {
@@ -9,6 +10,19 @@ function ExportModal(props) {
   const [isDraggingMax, setIsDraggingMax] = createSignal(false);
   const [filePrefix, setFilePrefix] = createSignal(''); // 添加文件前缀状态
   const [hasMultipleFiles, setHasMultipleFiles] = createSignal(false); // 是否有多个文件
+  const [currentLang, setCurrentLang] = createSignal(getCurrentLanguage()); // 监听语言变化
+
+  // 监听语言变化
+  createEffect(() => {
+    const intervalId = setInterval(() => {
+      const newLang = getCurrentLanguage();
+      if (newLang !== currentLang()) {
+        setCurrentLang(newLang);
+      }
+    }, 200); // 每200ms检查一次语言变化
+    
+    return () => clearInterval(intervalId);
+  });
 
   // 当拖动结束时，确保释放拖动状态
   const handleMouseUp = () => {
@@ -232,17 +246,12 @@ function ExportModal(props) {
         <div class="p-4 md:p-8">
           <div class="flex justify-between items-center mb-6">
             <h2 class="text-xl font-bold text-gray-800 dark:text-content-dark flex items-center gap-2">
-              {/* <span class="bg-green-500 text-white p-1.5 rounded">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-              </span> */}
-              导出数据
+              {t('exportModal.title')}
             </h2>
             <button
               onClick={props.onClose}
               class="text-content-subtle hover:text-content dark:text-content-dark-subtle dark:hover:text-content-dark transition-colors duration-200 transform hover:scale-110 active:scale-95"
-              aria-label="关闭"
+              aria-label={t('exportModal.close')}
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -252,41 +261,41 @@ function ExportModal(props) {
 
           <div class="mb-8 animate-fade-in" style="animation-delay: 0.1s;">
             <label class="block text-base font-bold text-gray-700 dark:text-content-dark mb-3 flex items-center">
-              导出格式
+              {t('exportModal.exportFormat')}
             </label>
             
             <div class="flex space-x-6">
               <label class="inline-flex items-center transition-all duration-200 hover:text-primary dark:hover:text-primary-dark cursor-pointer">
                 <input 
                   type="radio" 
-                  class="form-radio h-5 w-5 text-primary dark:text-primary-dark transition-all duration-200" 
+                  class="form-radio h-5 w-5 text-primary dark:text-primary-dark border-2 border-divider dark:border-divider-dark focus:ring-primary/30 dark:focus:ring-primary-dark/30 transition-all duration-200" 
                   checked={exportType() === 'all'}
                   onChange={() => setExportType('all')}
                 />
-                <span class="ml-2 text-gray-700 dark:text-content-dark">所有数据</span>
+                <span class="ml-2 text-gray-700 dark:text-content-dark">{t('exportModal.allData')}</span>
               </label>
               <label class="inline-flex items-center transition-all duration-200 hover:text-primary dark:hover:text-primary-dark cursor-pointer">
                 <input 
                   type="radio" 
-                  class="form-radio h-5 w-5 text-primary dark:text-primary-dark transition-all duration-200" 
+                  class="form-radio h-5 w-5 text-primary dark:text-primary-dark border-2 border-divider dark:border-divider-dark focus:ring-primary/30 dark:focus:ring-primary-dark/30 transition-all duration-200" 
                   checked={exportType() === 'saved'}
                   onChange={() => setExportType('saved')}
                 />
-                <span class="ml-2 text-gray-700 dark:text-content-dark">仅暂存数据</span>
+                <span class="ml-2 text-gray-700 dark:text-content-dark">{t('exportModal.savedDataOnly')}</span>
               </label>
             </div>
           </div>
 
           <div class="mb-8 animate-fade-in" style="animation-delay: 0.2s;">
             <label class="block text-base font-bold text-gray-700 dark:text-content-dark mb-3 flex items-center">
-              范围设置
+              {t('exportModal.rangeSettings')}
             </label>
             
             <div class="border border-gray-300 dark:border-divider-dark rounded-lg px-4 py-4 mb-4">
               {/* 移动端数值输入框 - 直接显示在顶部，无间隙 */}
               <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
                 <div class="w-full md:w-1/2">
-                  <label class="block text-sm text-gray-600 dark:text-content-dark-subtle mb-2">最小百分比值</label>
+                  <label class="block text-sm text-gray-600 dark:text-content-dark-subtle mb-2">{t('exportModal.minPercentage')}</label>
                   <input 
                     type="number"
                     class="w-full px-3 py-1.5 border border-divider dark:border-divider-dark rounded-md bg-white dark:bg-element-dark text-gray-900 dark:text-content-dark focus:ring-2 focus:ring-primary/30 dark:focus:ring-primary-dark/30 focus:border-primary dark:focus:border-primary-dark outline-none"
@@ -297,7 +306,7 @@ function ExportModal(props) {
                   />
                 </div>
                 <div class="w-full md:w-1/2">
-                  <label class="block text-sm text-gray-600 dark:text-content-dark-subtle mb-2">最大百分比值</label>
+                  <label class="block text-sm text-gray-600 dark:text-content-dark-subtle mb-2">{t('exportModal.maxPercentage')}</label>
                   <input 
                     type="number"
                     class="w-full px-3 py-1.5 border border-divider dark:border-divider-dark rounded-md bg-white dark:bg-element-dark text-gray-900 dark:text-content-dark focus:ring-2 focus:ring-primary/30 dark:focus:ring-primary-dark/30 focus:border-primary dark:focus:border-primary-dark outline-none"
@@ -311,7 +320,7 @@ function ExportModal(props) {
               
               {/* 移动端显示当前选择的范围提示 */}
               <div class="md:hidden mt-4 text-sm text-center text-gray-600 dark:text-content-dark-subtle">
-                当前选择范围: {rangeMin()}% - {rangeMax()}%
+                {t('exportModal.currentRange', { min: rangeMin(), max: rangeMax() })}
               </div>
               
               {/* 仅在非移动设备上显示滑块UI */}
@@ -322,7 +331,7 @@ function ExportModal(props) {
                   <div class="h-2 bg-gray-200 dark:bg-element-dark rounded-full relative w-full">
                     {/* 滑块选中区域 */}
                     <div 
-                      class="absolute h-2 bg-primary dark:bg-primary-dark rounded-full" 
+                      class="absolute h-2 btn-primary dark:btn-primary-dark rounded-full" 
                       style={{ 
                         left: getSliderPosition(rangeMin()),
                         right: `calc(100% - ${getSliderPosition(rangeMax())})`
@@ -340,7 +349,7 @@ function ExportModal(props) {
                       onMouseDown={() => setIsDraggingMin(true)}
                     >
                       {/* 气泡提示，确保与滑块居中对齐 */}
-                      <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-primary text-white px-2 py-1 rounded text-xs whitespace-nowrap min-w-[40px] text-center">
+                      <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 btn-primary text-white px-2 py-1 rounded text-xs whitespace-nowrap min-w-[40px] text-center">
                         {rangeMin()}%
                       </div>
                     </div>
@@ -356,7 +365,7 @@ function ExportModal(props) {
                       onMouseDown={() => setIsDraggingMax(true)}
                     >
                       {/* 气泡提示，确保与滑块居中对齐 */}
-                      <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-primary text-white px-2 py-1 rounded text-xs whitespace-nowrap min-w-[40px] text-center">
+                      <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 btn-primary text-white px-2 py-1 rounded text-xs whitespace-nowrap min-w-[40px] text-center">
                         {rangeMax()}%
                       </div>
                     </div>
@@ -396,22 +405,22 @@ function ExportModal(props) {
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-primary dark:text-primary-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
-                文件配置
+                {t('exportModal.fileConfig')}
               </label>
               <div class="flex items-center">
                 <div class="w-full">
-                  <label class="block text-sm text-gray-600 dark:text-gray-400 mb-2">文件前缀</label>
+                  <label class="block text-sm text-gray-600 dark:text-gray-400 mb-2">{t('exportModal.filePrefix')}</label>
                   <input 
                     type="text"
                     class="w-full px-3 py-1.5 border border-divider dark:border-divider-dark rounded-md bg-white dark:bg-element-dark text-gray-900 dark:text-content-dark focus:ring-2 focus:ring-primary/30 dark:focus:ring-primary-dark/30 focus:border-primary dark:focus:border-primary-dark outline-none transition-all duration-200"
-                    placeholder="可选的文件前缀"
+                    placeholder={t('exportModal.prefixPlaceholder')}
                     value={filePrefix()}
                     onInput={(e) => setFilePrefix(e.target.value)}
                   />
                 </div>
               </div>
               <div class="mt-2 text-xs text-gray-500 dark:text-content-dark-subtle">
-                文件将以 "{filePrefix() ? filePrefix() + '_' : ''}数值.json" 格式命名
+                {t('exportModal.fileNaming', { prefix: filePrefix() ? filePrefix() + '_' : '' })}
               </div>
             </div>
           )}
@@ -421,13 +430,13 @@ function ExportModal(props) {
               class="w-full md:w-auto px-5 py-2 bg-gray-200 dark:bg-element-dark text-gray-800 dark:text-content-dark rounded-md hover:bg-gray-300 dark:hover:bg-panel-dark transition-all duration-200 transform hover:scale-105 active:scale-95 hover:shadow-sm"
               onClick={props.onClose}
             >
-              取消
+              {t('exportModal.cancelButton')}
             </button>
             <button 
-              class="w-full md:w-auto mb-3 md:mb-0 px-5 py-2 bg-primary hover:bg-primary-dark text-white dark:bg-primary-dark dark:hover:bg-primary dark:text-white rounded-md transition-all duration-200 transform hover:scale-105 active:scale-95 hover:shadow-sm"
+              class="w-full md:w-auto mb-3 md:mb-0 px-5 py-2 btn-primary hover:bg-primary-dark text-white dark:btn-primary-dark dark:hover:btn-primary dark:text-white rounded-md transition-all duration-200 transform hover:scale-105 active:scale-95 hover:shadow-sm"
               onClick={handleExport}
             >
-              导出数据
+              {t('exportModal.exportButton')}
             </button>
           </div>
         </div>

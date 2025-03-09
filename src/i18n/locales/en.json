@@ -1,0 +1,46 @@
+{
+  "app": {
+    "title": "Table Width Calculator",
+    "baseWidth": "Base Width (px)",
+    "saveCurrentResult": "Save Current Result",
+    "resetSavedColumns": "Reset Saved Columns",
+    "export": "Export",
+    "toggleTheme": "Toggle Theme"
+  },
+  "table": {
+    "percentage": "Percentage",
+    "width": "Width",
+    "noData": "Please enter a valid base width above to view calculation results",
+    "copyValue": "Copy this value",
+    "deleteColumn": "Delete this column",
+    "allResults": "All Results",
+    "currentWidth": "Current Width"
+  },
+  "presets": {
+    "commonWidths": "Common Widths"
+  },
+  "exportModal": {
+    "title": "Export Data",
+    "close": "Close",
+    "exportFormat": "Export Format",
+    "allData": "All Data",
+    "savedDataOnly": "Saved Data Only",
+    "rangeSettings": "Range Settings",
+    "minPercentage": "Minimum Percentage",
+    "maxPercentage": "Maximum Percentage",
+    "currentRange": "Current Range: {{min}}% - {{max}}%",
+    "fileConfig": "File Configuration",
+    "filePrefix": "File Prefix",
+    "prefixPlaceholder": "Optional file prefix",
+    "fileNaming": "Files will be named \"{{prefix}}value.json\"",
+    "exportButton": "Export Data",
+    "cancelButton": "Cancel"
+  },
+  "notification": {
+    "copied": "Copied to clipboard",
+    "saved": "Successfully saved",
+    "deleted": "Deleted",
+    "reset": "All saved columns have been reset",
+    "exported": "Data successfully exported"
+  }
+} 

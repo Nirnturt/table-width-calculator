@@ -1,10 +1,16 @@
-import { createSignal, onMount } from 'solid-js';
+import { createSignal, onMount, Suspense } from 'solid-js';
+import { t } from './i18n';
 import CombinedResultsTable from './components/CombinedResultsTable';
 import PresetWidths from './components/PresetWidths';
 import Notification from './components/Notification';
-import ExportModal from './components/ExportModal';
+import LanguageSwitcher from './components/LanguageSwitcher';
+// 使用懒加载导入ExportModal
+import { lazyLoad } from './utils/lazyLoad.jsx';
 import { loadSavedColumns, saveColumnsToStorage } from './utils/storage';
 import { getTheme, setTheme, toggleTheme } from './utils/theme';
+
+// 懒加载ExportModal组件
+const ExportModal = lazyLoad(() => import('./components/ExportModal'));
 
 function App() {
   const [baseWidth, setBaseWidth] = createSignal(1000);
@@ -132,13 +138,24 @@ function App() {
         visible={notification().visible} 
       />
 
-      <ExportModal 
-        isOpen={exportModalOpen()} 
-        onClose={closeExportModal} 
-        onNotification={showNotification}
-        currentWidth={baseWidth() && !isNaN(parseFloat(baseWidth())) ? parseFloat(baseWidth()) : null}
-        savedColumns={savedColumns()}
-      />
+      <Suspense fallback={
+        <div class="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-sm">
+          <div class="bg-white dark:bg-canvas-dark p-8 rounded-lg shadow-xl">
+            <div class="flex flex-col items-center justify-center">
+              <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary dark:border-primary-dark"></div>
+              <p class="mt-4 text-content dark:text-content-dark">{t('app.loading', '加载中...')}</p>
+            </div>
+          </div>
+        </div>
+      }>
+        <ExportModal 
+          isOpen={exportModalOpen()} 
+          onClose={closeExportModal} 
+          onNotification={showNotification}
+          currentWidth={baseWidth() && !isNaN(parseFloat(baseWidth())) ? parseFloat(baseWidth()) : null}
+          savedColumns={savedColumns()}
+        />
+      </Suspense>
       
       <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 md:py-10">
         <div class={`flex justify-between items-center mb-8 transition-all duration-200 ${isLoaded() ? 'opacity-100' : 'opacity-0 translate-y-2'} ${isInitializing() ? 'hidden' : ''}`}>
@@ -148,26 +165,28 @@ function App() {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>
             </span>
-            表格列宽计算器
+            {t('app.title')}
           </h1>
           
           <div class="flex items-center gap-2">
             <button
               onClick={openExportModal}
               class="btn btn-primary flex items-center gap-1 text-sm"
-              title="导出数据"
+              title={t('app.export')}
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
-              <span>导出</span>
+              <span>{t('app.export')}</span>
             </button>
+            
+            <LanguageSwitcher />
             
             <button
               onClick={handleThemeToggle}
               class="p-2 rounded-md bg-element dark:bg-element-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              aria-label="切换主题"
-              title="切换主题"
+              aria-label={t('app.toggleTheme')}
+              title={t('app.toggleTheme')}
             >
               <span class="block h-5 w-5 flex items-center justify-center text-content dark:text-content-dark">
                 {theme() === 'dark' ? '☀️' : '🌙'}
@@ -176,10 +195,10 @@ function App() {
           </div>
         </div>
         
-        <div class={`card p-4 md:p-5 mb-6 md:mb-8 transition-all duration-200 ${isLoaded() ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+        <div class={`card p-4 md:p-5 mb-6 md:mb-8 transition-all duration-200 ${isLoaded() ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'} ${isInitializing() ? 'hidden' : ''}`}>
           <div class="flex flex-col gap-4">
             <div class="w-full">
-              <label for="baseWidth" class="block text-sm font-medium text-content-subtle dark:text-content-dark-subtle mb-1.5">基准宽度 (px)</label>
+              <label for="baseWidth" class="block text-sm font-medium text-content-subtle dark:text-content-dark-subtle mb-1.5">{t('app.baseWidth')}</label>
               <input 
                 type="number" 
                 id="baseWidth" 
@@ -193,13 +212,13 @@ function App() {
                 class="btn btn-primary flex-1"
                 onClick={saveCurrentColumn}
               >
-                暂存当前结果
+                {t('app.saveCurrentResult')}
               </button>
               <button 
                 class="btn btn-secondary flex-1"
                 onClick={resetSavedColumns}
               >
-                重置暂存列
+                {t('app.resetSavedColumns')}
               </button>
             </div>
           </div>
@@ -219,13 +238,13 @@ function App() {
               class={`tab ${activeTab() === 'all' ? 'tab-active' : 'tab-inactive'}`}
               onClick={() => setActiveTab('all')}
             >
-              全部结果
+              {t('table.allResults')}
             </button>
             <button 
               class={`tab ${activeTab() === 'current' ? 'tab-active' : 'tab-inactive'}`}
               onClick={() => setActiveTab('current')}
             >
-              当前宽度 {baseWidth() && !isNaN(parseFloat(baseWidth())) ? `(${baseWidth()}px)` : ''}
+              {t('table.currentWidth')} {baseWidth() && !isNaN(parseFloat(baseWidth())) ? `(${baseWidth()}px)` : ''}
             </button>
           </div>
 

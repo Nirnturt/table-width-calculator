@@ -1,0 +1,46 @@
+{
+  "app": {
+    "title": "表格宽度计算器",
+    "baseWidth": "基准宽度 (px)",
+    "saveCurrentResult": "暂存当前结果",
+    "resetSavedColumns": "重置暂存列",
+    "export": "导出",
+    "toggleTheme": "切换主题"
+  },
+  "table": {
+    "percentage": "百分比",
+    "width": "宽度",
+    "noData": "请在上方输入有效的基准宽度以查看计算结果",
+    "copyValue": "复制此值",
+    "deleteColumn": "删除此列",
+    "allResults": "全部结果",
+    "currentWidth": "当前宽度"
+  },
+  "presets": {
+    "commonWidths": "常用宽度"
+  },
+  "exportModal": {
+    "title": "导出数据",
+    "close": "关闭",
+    "exportFormat": "导出格式",
+    "allData": "所有数据",
+    "savedDataOnly": "仅暂存数据",
+    "rangeSettings": "范围设置",
+    "minPercentage": "最小百分比值",
+    "maxPercentage": "最大百分比值",
+    "currentRange": "当前选择范围: {{min}}% - {{max}}%",
+    "fileConfig": "文件配置",
+    "filePrefix": "文件前缀",
+    "prefixPlaceholder": "可选的文件前缀",
+    "fileNaming": "文件将以 \"{{prefix}}数值.json\" 格式命名",
+    "exportButton": "导出数据",
+    "cancelButton": "取消"
+  },
+  "notification": {
+    "copied": "已复制到剪贴板",
+    "saved": "已成功暂存",
+    "deleted": "已删除",
+    "reset": "已重置所有暂存列",
+    "exported": "已成功导出数据"
+  }
+} 

@@ -1,4 +1,5 @@
 import { createMemo, For, Show, createSignal, createEffect, onMount } from 'solid-js';
+import { t } from '../i18n';
 
 function CombinedResultsTable(props) {
   const [copiedValue, setCopiedValue] = createSignal(null);
@@ -189,7 +190,7 @@ function CombinedResultsTable(props) {
               <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h10a2 2 0 012 2v14a2 2 0 01-2 2z" />
               </svg>
-              <p>请在上方输入有效的基准宽度以查看计算结果</p>
+              <p>{t('table.noData')}</p>
             </div>
           }
         >
@@ -198,18 +199,20 @@ function CombinedResultsTable(props) {
               <thead>
                 <tr>
                   <th class="table-sticky left-0 bg-panel dark:bg-panel-dark">
-                    百分比
+                    {t('table.percentage')}
                   </th>
                   <For each={displayColumns()}>
                     {(column, columnIndex) => (
                       <th class={column.isCurrent ? 'text-primary dark:text-primary-dark' : ''}>
                         <div class="flex items-center gap-2">
-                          <span class="transition-transform duration-200 group-hover:scale-105">宽度 {column.baseWidth}px</span>
+                          <span class="transition-transform duration-200 group-hover:scale-105">
+                            {t('table.width')} {column.baseWidth}px
+                          </span>
                           <Show when={!column.isCurrent && props.activeTab !== 'current'}>
                             <button 
                               class="text-content-subtle hover:text-danger transition-colors duration-200 opacity-0 group-hover:opacity-100"
                               onClick={(e) => handleDelete(column.baseWidth, e)}
-                              title="删除此列"
+                              title={t('table.deleteColumn')}
                             >
                               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
@@ -244,7 +247,7 @@ function CombinedResultsTable(props) {
                                         transition-colors duration-200 opacity-50 group-hover:opacity-100
                                         ${copiedValue() === value ? 'text-success dark:text-success-dark opacity-100' : 'text-content-subtle dark:text-content-dark-subtle'}`}
                                   onClick={() => handleCopy(value)}
-                                  title="复制此值"
+                                  title={t('table.copyValue')}
                                 >
                                   {copiedValue() === value ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -279,7 +282,7 @@ function CombinedResultsTable(props) {
             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-3 text-content-subtle dark:text-content-dark-subtle" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h10a2 2 0 012 2v14a2 2 0 01-2 2z" />
             </svg>
-            <p>请在上方输入有效的基准宽度以查看计算结果</p>
+            <p>{t('table.noData')}</p>
           </div>
         }
       >

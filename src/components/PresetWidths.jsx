@@ -1,4 +1,5 @@
 import { createSignal } from 'solid-js';
+import { t } from '../i18n';
 
 function PresetWidths(props) {
   const commonWidths = [900, 1000, 1100, 1200, 1600, 1700];
@@ -18,7 +19,7 @@ function PresetWidths(props) {
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
             </svg>
-            常用宽度
+            {t('presets.commonWidths')}
           </h2>
           <div class="flex flex-wrap gap-2">
             {commonWidths.map((width) => (
