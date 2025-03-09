@@ -1,4 +1,4 @@
-# Table Width Calculator | 表格宽度计算器
+# Table Width Calculator | 表格列宽计算器
 
 [English](#english) | [中文](#中文)
 
@@ -78,7 +78,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ### 概述
 
-表格宽度计算器是一个现代化的网页应用，专为设计师和开发者设计，用于快速计算和可视化基于百分比的宽度。它对响应式设计特别有用，让您能够直观地看到不同百分比值基于参考容器宽度转换为像素宽度的效果。
+表格列宽计算器是一个现代化的网页应用，专为设计师和开发者设计，用于快速计算和可视化基于百分比的宽度。它对响应式设计特别有用，让您能够直观地看到不同百分比值基于参考容器宽度转换为像素宽度的效果。
 
 ### 功能特点
 
