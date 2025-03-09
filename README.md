@@ -2,7 +2,6 @@
 
 [English](#english) | [中文](#中文)
 
-![Table Width Calculator](https://github.com/yourusername/table-width-calculator/raw/main/screenshot.png)
 
 <a id="english"></a>
 ## 🌐 English
@@ -103,7 +102,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 1. **克隆仓库**
    ```bash
-   git clone https://github.com/yourusername/table-width-calculator.git
+   git clone https://github.com/Nirnturt/table-width-calculator.git
    cd table-width-calculator
    ```
 
