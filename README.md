@@ -21,7 +21,7 @@ A modern, responsive utility for calculating and visualizing table column widths
 
 **[🔗 Live Demo](https://nirn.design/table)** | **[🐞 Report Issues](https://github.com/nirnturt/table-width-calculator/issues)**
 
-![Table Width Calculator Preview](https://github.com/nirnturt/table-width-calculator/raw/main/screenshot.png)
+![Table Width Calculator Preview](https://github.com/Nirnturt/table-width-calculator/blob/main/src/demo.png)
 
 ### ✨ Features
 
@@ -115,7 +115,7 @@ The project is open source and maintained by the community, with an emphasis on 
 
 **[🔗 在线演示](https://nirn.design/table)** | **[🐞 报告问题](https://github.com/nirnturt/table-width-calculator/issues)**
 
-![表格宽度计算器预览](https://github.com/nirnturt/table-width-calculator/raw/main/screenshot.png)
+![表格宽度计算器预览](https://github.com/Nirnturt/table-width-calculator/blob/main/src/demo.png)
 
 ### ✨ 特点
 
