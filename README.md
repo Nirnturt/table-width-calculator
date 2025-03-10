@@ -1,4 +1,4 @@
-# Table Width Calculator | 表格宽度计算器
+# Table Width Calculator | 表格列宽计算器
 
 <p align="center">
   <a href="#english">English</a> | <a href="#中文">中文</a>
