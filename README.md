@@ -1,10 +1,6 @@
 # Table Width Calculator | 表格宽度计算器
 
 <p align="center">
-  <img src="https://github.com/nirnturt/table-width-calculator/raw/main/src/assets/logo.png" alt="Table Width Calculator Logo" width="120" height="120" />
-</p>
-
-<p align="center">
   <a href="#english">English</a> | <a href="#中文">中文</a>
 </p>
 
